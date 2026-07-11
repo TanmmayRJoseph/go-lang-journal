@@ -1,0 +1,96 @@
+################################################################################
+# API Configuration
+################################################################################
+
+@host = http://localhost
+@port = 8080
+@baseUrl = {{host}}:{{port}}
+
+@contentType = application/json
+
+################################################################################
+# Health Check
+################################################################################
+
+### Home
+GET {{baseUrl}}/
+Accept: application/json
+
+###
+
+### Health Check
+GET {{baseUrl}}/health
+Accept: application/json
+
+################################################################################
+# Authentication
+################################################################################
+
+@userEmail = test@example.com
+@userPassword = Password@123
+
+###
+
+### Register User
+POST {{baseUrl}}/users/register
+Content-Type: {{contentType}}
+
+{
+    "email": "{{userEmail}}",
+    "password": "{{userPassword}}"
+}
+
+###
+
+### Login User
+# @name login
+
+POST {{baseUrl}}/users/login
+Content-Type: {{contentType}}
+
+{
+    "email": "{{userEmail}}",
+    "password": "{{userPassword}}"
+}
+
+###
+
+################################################################################
+# Store JWT Token
+################################################################################
+
+@accessToken = {{login.response.body.token}}
+
+################################################################################
+# Protected Routes
+################################################################################
+
+### User Route
+GET {{baseUrl}}/protected/user
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+###
+
+### Admin Route
+GET {{baseUrl}}/protected/admin
+Authorization: Bearer {{accessToken}}
+Accept: application/json
+
+################################################################################
+# Invalid Token Testing
+################################################################################
+
+###
+
+GET {{baseUrl}}/protected/user
+Authorization: Bearer InvalidToken
+
+################################################################################
+# Missing Token Testing
+################################################################################
+
+###
+
+GET {{baseUrl}}/protected/user
+
