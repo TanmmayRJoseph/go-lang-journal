@@ -8,9 +8,7 @@
 
 @contentType = application/json
 
-################################################################################
 # Health Check
-################################################################################
 
 ### Home
 GET {{baseUrl}}/
@@ -22,9 +20,8 @@ Accept: application/json
 GET {{baseUrl}}/health
 Accept: application/json
 
-################################################################################
+
 # Authentication
-################################################################################
 
 @userEmail = test@example.com
 @userPassword = Password@123
@@ -55,16 +52,12 @@ Content-Type: {{contentType}}
 
 ###
 
-################################################################################
-# Store JWT Token
-################################################################################
 
+# Store JWT Token
 @accessToken = {{login.response.body.token}}
 
-################################################################################
-# Protected Routes
-################################################################################
 
+# Protected Routes
 ### User Route
 GET {{baseUrl}}/protected/user
 Authorization: Bearer {{accessToken}}
@@ -77,19 +70,14 @@ GET {{baseUrl}}/protected/admin
 Authorization: Bearer {{accessToken}}
 Accept: application/json
 
-################################################################################
 # Invalid Token Testing
-################################################################################
-
 ###
 
 GET {{baseUrl}}/protected/user
 Authorization: Bearer InvalidToken
 
-################################################################################
-# Missing Token Testing
-################################################################################
 
+# Missing Token Testing
 ###
 
 GET {{baseUrl}}/protected/user
